@@ -40,6 +40,56 @@ def image_compose(file_name, IMAGE_SAVE_PATH):
     return to_image.save(IMAGE_SAVE_PATH)  # 保存新图
 
 
+# 拼接一个目录下的所有图片为一张大图
+# 根据图片命名来自动计算行列数
+#
+def image_compose2(file_name, img_save_path):
+    # 遍历所有图片
+    img_list = os.listdir(file_name)
+    img_total = len(img_list)
+    img_column = 0
+    for _img in img_list:
+        if _img[0] == '0':
+            img_column = img_column + 1
+        else:
+            break
+        print(_img[0], _img)
+    img_row = img_total / img_column
+
+    print(img_total, img_column, img_row)
+
+    return
+    to_image = Image.new('RGB', (IMAGE_COLUMN * IMAGE_SIZE, IMAGE_ROW * IMAGE_SIZE))  # 创建一个新图
+    # to_image = Image.new('L', (IMAGE_COLUMN * IMAGE_SIZE, IMAGE_ROW * IMAGE_SIZE))
+    # 循环遍历，把每张图片按顺序粘贴到对应位置上
+    num = 0
+    mnu = 0
+    for y in range(0, IMAGE_ROW):
+        for x in range(0, IMAGE_COLUMN):
+
+            # path = file_name + str(num) + '_' + str(mnu) + '_' + \
+            #        str(IMAGE_SIZE) + '_' + str(IMAGE_SIZE) + '.png'
+            path = os.path.join(file_name, str(num) + '_' + str(mnu) + '_' + \
+                                str(IMAGE_SIZE) + '_' + str(IMAGE_SIZE) + '.jpg')
+            # print(path)
+            # f_dir_name = os.path.split(os.path.split(os.path.split(path)[0])[0])[1]
+
+            from_image = Image.open(path).resize(
+                (IMAGE_SIZE, IMAGE_SIZE), Image.ANTIALIAS)
+            to_image.paste(from_image, ((x - 0) * IMAGE_SIZE, (y - 0) * IMAGE_SIZE))
+            mnu += 1
+            if mnu == IMAGE_COLUMN:
+                mnu = 0
+                num += 1
+
+    return to_image.save(img_save_path)  # 保存新图
+
+
+image_compose2(r"G:\pos_calculation_YiDu2\block7_jpg_cut_save",
+               r"G:\pos_calculation_YiDu3\block7_jpg_mem")
+exit()
+
+
 def total_merge_img(in_path, out_path):
     in_path_list = os.listdir(in_path)
     for q_dir in in_path_list:

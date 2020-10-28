@@ -1,13 +1,30 @@
 import pingjie
 from utils import trans_2_img
+import shutil
+import os
+
+
+def copy_block(block_path, copy_path):
+    # block_path = "F:\pos_calculation_YiDu2"
+    # copy_path = "F:\pos_calculation_YiDu2"
+    for img_name in os.listdir(block_path):
+        print('===', img_name, os.path.join(block_path, img_name))
+        for _img in os.listdir(os.path.join(block_path, img_name)):
+            ori_img = os.path.join(block_path, img_name, _img)
+            copy_img = os.path.join(copy_path, img_name+_img)
+            if not os.path.exists(copy_path):
+                os.makedirs(copy_path)
+            print('===', _img, ori_img, copy_img)
+
+            shutil.copyfile(ori_img, copy_img)
+
 
 if __name__ == "__main__":
-    # 转波段
-    in_path = r"F:\3bangs_qu\save_img"
-    out_path = r"F:\3bangs_qu\merge_img"
-    pingjie.total_merge_img(in_path, out_path)
+    #
+    # block_path = r"F:\pos_calculation_YiDu2\block7_jpg_cut"
+    # copy_path = r"F:\pos_calculation_YiDu2\block7_jpg_cut_all"
+    # copy_block(block_path, copy_path)
 
-    png_path = r"F:\3bangs_qu\merge_img"
-    # png_path = r"E:\3bangs_qu\png"
-    img_2_path = r"F:\3bangs_qu\two"
-    trans_2_img.total_tans_2_img(png_path, img_2_path)
+    block_path = r"F:\pos_calculation_YiDu2\block7_jpg_cut_save"
+    copy_path = r"F:\pos_calculation_YiDu2\block7_jpg_cut_save_all"
+    copy_block(block_path, copy_path)
