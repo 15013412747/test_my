@@ -38,7 +38,8 @@ def cut_dir_img(dir_path, cut_path):
     # 遍历图片
     for _img in img_list:
         # 不是图片不处理
-        if _img.split(".")[-1] not in ['JPG', 'PNG']:
+        print(_img, _img.split(".")[-1].lower(), _img.split(".")[-1].lower() not in ['jpg', 'png'])
+        if _img.split(".")[-1].lower() not in ['jpg', 'png']:
             continue
         _cut_image(dir_path, cut_path, _img)
 
@@ -206,8 +207,8 @@ def cut_image(input_img_path, output_img_path, q_dir):
 
 
 if "__main__" == __name__:
-    input_img_path = r"G:\pos_calculation_YiDu\block7_jpg"
-    output_img_path = r"G:\pos_calculation_YiDu\block7_jpg_cut"
+    input_img_path = r"F:\YiDuDom2\png\block7"
+    output_img_path = r"F:\YiDuDom2\cut"
 
     cut_dir_img(input_img_path, output_img_path)
     # cut_image_total(input_img_path, output_img_path)

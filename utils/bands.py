@@ -65,22 +65,22 @@ def total_band4_to_band3(ori_path, new_path):
 
     tif_path_list = os.listdir(ori_path)
     # 遍历区块
-    for q_dir in tif_path_list:
+    for block_dir in tif_path_list:
         # 只转设定区块的数据
-        if not q_dir in ["q1_2"]:
+        if not block_dir in ["block7"]:
             continue
         # 遍历区块下的文件夹
-        for tif_img in os.listdir(os.path.join(ori_path, q_dir)):
+        for tif_img in os.listdir(os.path.join(ori_path, block_dir)):
             print(tif_img)
 
             # 文件不存在，创建文件夹
-            if not os.path.exists(os.path.join(new_path, q_dir)):
-                os.makedirs(os.path.join(new_path, q_dir))
+            if not os.path.exists(os.path.join(new_path, block_dir)):
+                os.makedirs(os.path.join(new_path, block_dir))
             # 非 tif 不做处理，只处理 tif 格式文件
             if tif_img.split(".")[-1] != 'tif':
                 continue
-            band4_path = os.path.join(ori_path, q_dir, tif_img)
-            band3_path = os.path.join(new_path, q_dir, tif_img)
+            band4_path = os.path.join(ori_path, block_dir, tif_img)
+            band3_path = os.path.join(new_path, block_dir, tif_img)
             print(band4_path, band3_path)
             band4_to_band3(band4_path, band3_path)
 

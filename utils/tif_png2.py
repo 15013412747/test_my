@@ -18,6 +18,7 @@ def old_function():
 
 
 def total_tif_trans_png(tif_path, png_path):
+    print(tif_path, png_path)
     # tif_path = "E:\\3bangs_qu\\tif"
     # tif_path = r"D:\YiDuDOM3bangs"
     # png_path = r"E:\3bangs_qu\png"
@@ -27,6 +28,7 @@ def total_tif_trans_png(tif_path, png_path):
     #     os.
 
     tif_path_list = os.listdir(tif_path)
+    print("tif path", tif_path_list)
     for q_dir in tif_path_list:
         for tif_img in os.listdir(os.path.join(tif_path, q_dir)):
             # 文件不存在，创建文件夹
@@ -53,7 +55,7 @@ def tif_trans_png(tif_img_path, png_img_path):
 
 
 if __name__ == "__main__":
-    tif_path = r"D:\YiDuDOM3bangs"
+    tif_path = r"F:\YiDuDOM2"
     # png_path = r"E:\3bangs_qu\png"
-    png_path = r"E:\sick_tree_sample\png"
+    png_path = r"F:\YiDuDOM2\png"
     total_tif_trans_png(tif_path, png_path)

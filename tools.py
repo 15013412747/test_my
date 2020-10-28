@@ -19,13 +19,15 @@ print(properties)
 input_path = properties['input_path']
 output_path = properties['output_path']
 
-input_path = r""
-output_path = r""
+input_path = r"F:\YiDuDom"
+output_path = r"F:\YiDuDom2\block7"
 
 if __name__ == "__main__":
     # 转波段
-    band3_path = os.path.join(output_path, '3bang_tif_path')
-    bands.total_band4_to_band3(input_path, output_path)
+    # band3_path = os.path.join(output_path, '3bang_tif_path')
+    band3_path = os.path.join(input_path)
+    print(band3_path)
+    # bands.total_band4_to_band3(input_path, output_path)
 
     # tif 转化 png
     png_path = os.path.join(output_path, 'png_path')
