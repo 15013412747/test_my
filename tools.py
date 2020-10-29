@@ -27,7 +27,7 @@ if __name__ == "__main__":
     # band3_path = os.path.join(output_path, '3bang_tif_path')
     band3_path = os.path.join(input_path)
     print(band3_path)
-    # bands.total_band4_to_band3(input_path, output_path)
+    bands.total_band4_to_band3(input_path, output_path)
 
     # tif 转化 png
     png_path = os.path.join(output_path, 'png_path')

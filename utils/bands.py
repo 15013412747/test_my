@@ -58,6 +58,22 @@ def band4_to_band3(band4_path, band3_path):
     print(" === end band4 trans to band3")
 
 
+def block_band4_to_band3(block_path, block_path2):
+    for tif_img in os.listdir(block_path):
+        print(tif_img)
+
+        # 文件不存在，创建文件夹
+        if not os.path.exists(os.path.join(block_path2)):
+            os.makedirs(os.path.join(block_path2))
+        # 非 tif 不做处理，只处理 tif 格式文件
+        if tif_img.split(".")[-1] != 'tif':
+            continue
+        band4_path = os.path.join(block_path, tif_img)
+        band3_path = os.path.join(block_path2, tif_img)
+        print(band4_path, band3_path)
+        band4_to_band3(band4_path, band3_path)
+
+
 # 转换所有 tif 文件波段
 def total_band4_to_band3(ori_path, new_path):
     # ori_path = r"E:\qu"
@@ -67,26 +83,30 @@ def total_band4_to_band3(ori_path, new_path):
     # 遍历区块
     for block_dir in tif_path_list:
         # 只转设定区块的数据
-        if not block_dir in ["block7"]:
+        if not block_dir in ["YiDu1027_DOM"]:
             continue
         # 遍历区块下的文件夹
-        for tif_img in os.listdir(os.path.join(ori_path, block_dir)):
-            print(tif_img)
-
-            # 文件不存在，创建文件夹
-            if not os.path.exists(os.path.join(new_path, block_dir)):
-                os.makedirs(os.path.join(new_path, block_dir))
-            # 非 tif 不做处理，只处理 tif 格式文件
-            if tif_img.split(".")[-1] != 'tif':
-                continue
-            band4_path = os.path.join(ori_path, block_dir, tif_img)
-            band3_path = os.path.join(new_path, block_dir, tif_img)
-            print(band4_path, band3_path)
-            band4_to_band3(band4_path, band3_path)
+        block_path = os.path.join(ori_path, block_dir)
+        block_path2 = os.path.join(new_path, block_dir)
+        block_band4_to_band3(block_path, block_path2)
+        # for tif_img in os.listdir(os.path.join(ori_path, block_dir)):
+        #     print(tif_img)
+        #
+        #     # 文件不存在，创建文件夹
+        #     if not os.path.exists(os.path.join(new_path, block_dir)):
+        #         os.makedirs(os.path.join(new_path, block_dir))
+        #     # 非 tif 不做处理，只处理 tif 格式文件
+        #     if tif_img.split(".")[-1] != 'tif':
+        #         continue
+        #     band4_path = os.path.join(ori_path, block_dir, tif_img)
+        #     band3_path = os.path.join(new_path, block_dir, tif_img)
+        #     print(band4_path, band3_path)
+        #     band4_to_band3(band4_path, band3_path)
 
 
 if __name__ == "__main__":
-    path1 = r'D:\YiDuDOM'
+    print("switch bands start ===")
+    path1 = r'F:\YiDuDom'
     path2 = path1 + '3bangs'
     print(path1, path2)
     total_band4_to_band3(path1, path2)

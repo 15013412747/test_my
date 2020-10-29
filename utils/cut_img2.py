@@ -23,8 +23,8 @@ IMAGES_FORMAT = ['.png']  # 图片格式
 def _cut_image(ori_img_path, save_img_path, img_name):
     file_name = os.path.join(ori_img_path, str(img_name))
     # save_path = dstpath + str(sample[:-4]) + '/'
-    save_path = os.path.join(save_img_path, str(img_name[:-4]))
-    # save_path = os.path.join(save_img_path)
+    # save_path = os.path.join(save_img_path, str(img_name[:-4]))
+    save_path = os.path.join(save_img_path)
     print("from", file_name, "to", save_path)
     Path(save_path).mkdir(parents=True, exist_ok=True)
     # block size
@@ -63,8 +63,8 @@ def _cut_image(ori_img_path, save_img_path, img_name):
     for i in range(max_row):
         images_temp = []
         for j in range(max_col):
-            # temp_path = save_path + '/' + str(img_name.split(".")[0]) + str(i) + '_' + str(j) + '_'
-            temp_path = save_path + '/' + str(i) + '_' + str(j) + '_'
+            temp_path = save_path + '/' + str(img_name.split(".")[0]) + str(i) + '_' + str(j) + '_'
+            # temp_path = save_path + '/' + str(i) + '_' + str(j) + '_'
             if ((width + j * w_val) > original_width and (
                     i * h_val + height) <= original_height):  # Judge the right most incomplete part
                 temp = img[i * h_val:i * h_val + height, j * w_val:original_width, :]
@@ -125,7 +125,7 @@ def cut_block_img(block_path, cut_path):
 
 
 block_path = r"F:\YiDuDom3bangs\YiDu1027_DOM_jpg"
-cut_path = r"F:\YiDuDom3bangs\YiDu1027_DOM_jpg_cut"
+cut_path = r"F:\YiDuDom3bangs\YiDu1027_DOM_jpg_cut_tran"
 cut_block_img(block_path, cut_path)
 exit()
 

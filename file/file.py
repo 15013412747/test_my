@@ -29,6 +29,22 @@ def copy_block(block_path, copy_path):
             shutil.copyfile(ori_img, copy_img)
 
 
+def copy_error_img():
+    ori_path = r"F:\pos_calculation_YiDu2\block7_jpg_cut_all"
+    error_path = r"F:\error"
+    error_path2 = r"F:\error2"
+    if not os.path.exists(error_path2):
+        os.makedirs(error_path2)
+
+    error_list = os.listdir(error_path)
+    for error_img in error_list:
+        print(error_img)
+        ori_img = os.path.join(ori_path, error_img.split(".")[0] + '.png')
+        copy_img = os.path.join(error_path2, error_img)
+        shutil.copyfile(ori_img, copy_img)
+
+
 if __name__ == "__main__":
     print("exectue file:", __file__)
+    copy_error_img()
     # rename_file()

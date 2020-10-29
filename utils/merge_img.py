@@ -103,10 +103,13 @@ def total_merge_img(in_path, out_path):
 
 
 def block_merge(block_path, merge_block_path):
+    if not os.path.exists(merge_block_path):
+        os.makedirs(merge_block_path)
+
     for img_name in os.listdir(block_path):
         print(os.path.join(block_path, img_name))
         path1 = os.path.join(block_path, img_name)
-        path2 = os.path.join(merge_block_path, img_name) + '.jpg'
+        path2 = os.path.join(merge_block_path, img_name) + '.png'
         print(path1, path2)
         image_compose2(path1, path2)
 
@@ -166,7 +169,7 @@ def merge_img(cut_img_path, merge_img_path):
 if "__main__" == __name__:
     # in_path = r"F:\3bangs_qu\save_img"
     # out_path = r"F:\3bangs_qu\merge_img"
-    # block_merge(r"G:\pos_calculation_YiDu2\block7_jpg_cut_save", r"G:\pos_calculation_YiDu3\block7_jpg_mem")
-    in_path = r"G:\pos_calculation_YiDu2"
-    out_path = r"G:\pos_calculation_YiDu3\block7_jpg_mem"
-    total_merge_img(in_path, out_path)
+    block_merge(r"G:\YiDuDom2\cut_save\cut", r"G:\YiDuDom2\cut_save_merge")
+    # in_path = r"G:\pos_calculation_YiDu2"
+    # out_path = r"G:\pos_calculation_YiDu3\block7_jpg_mem"
+    # total_merge_img(in_path, out_path)

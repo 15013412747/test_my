@@ -17,6 +17,46 @@ def old_function():
         src_ds = None
 
 
+def tif_trans_png(tif_img_path, png_img_path):
+    print("=== start transfer: ", tif_img_path, png_img_path)
+    ds = gdal.Open(tif_img_path)
+    driver = gdal.GetDriverByName('PNG')
+    dst_ds = driver.CreateCopy(png_img_path, ds)
+    print("=== end transfer: ", tif_img_path, png_img_path)
+
+
+def tif_trans_jpg(tif_img_path, img_path):
+    print("=== start transfer: ", tif_img_path, img_path)
+    ds = gdal.Open(tif_img_path)
+    driver = gdal.GetDriverByName('JPEG')
+    dst_ds = driver.CreateCopy(img_path, ds)
+
+    print("=== end transfer: ", tif_img_path, img_path)
+
+
+# tif_trans_jpg(r"G:\pos_calculation_YiDu\block7_tif\block7-0-0.tif", r"G:\test\test.jpg")
+# exit()
+
+
+def block_tif_trans(block_path, block_path2, img_type="jpg"):
+    if not os.path.exists(block_path2):
+        os.makedirs(block_path2)
+    for tif_img in os.listdir(block_path):
+        print(tif_img)
+        tif_path = os.path.join(block_path, tif_img)
+
+        img_name = tif_img.split(".")[0] + '.jpg'
+        if img_type == "png":
+            img_name = tif_img.split(".")[0] + '.png'
+        img_path = os.path.join(block_path2, img_name)
+
+        tif_trans_jpg(tif_path, img_path)
+
+
+# block_tif_trans(r"F:\YiDuDom3bangs\YiDu1027_DOM", r"F:\YiDuDom3bangs\YiDu1027_DOM_jpg")
+# exit()
+
+
 def total_tif_trans_png(tif_path, png_path):
     print(tif_path, png_path)
     # tif_path = "E:\\3bangs_qu\\tif"
@@ -44,14 +84,6 @@ def total_tif_trans_png(tif_path, png_path):
             tif_img_path = os.path.join(tif_path, q_dir, tif_img)
             png_img_path = os.path.join(png_path, q_dir, png_img)
             tif_trans_png(tif_img_path, png_img_path)
-
-
-def tif_trans_png(tif_img_path, png_img_path):
-    print("=== start transfer: ", tif_img_path, png_img_path)
-    ds = gdal.Open(tif_img_path)
-    driver = gdal.GetDriverByName('PNG')
-    dst_ds = driver.CreateCopy(png_img_path, ds)
-    print("=== end transfer: ", tif_img_path, png_img_path)
 
 
 if __name__ == "__main__":
