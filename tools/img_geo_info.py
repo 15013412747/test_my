@@ -8,6 +8,7 @@ def get_block_geo_info(block_path):
     res = []
     for tif_img in os.listdir(block_path):
         tif_path = os.path.join(block_path, tif_img)
+        print(" === get geo info === :", tif_path)
         geo_data = gdal_calc.get_geo_info(tif_path)
         res.append(str(geo_data))
         print(geo_data)
@@ -29,14 +30,15 @@ def read_geo_file(file_path):
 
 
 if __name__ == "__main__":
-    block_path = r"G:\pos_calculation_YiDu\block7_tif"
-    file_path = r"G:\test\test.txt"
-    # write_block_geo_info(block_path, file_path)
-    res = read_geo_file(file_path)
-    print(res)
-    print(res[0])
-    print(tuple(eval(res[0]))[1])
-    print(type(tuple(eval(res[0]))[1][0]), tuple(eval(res[0]))[1][0])
-    print(type(tuple(eval(res[0]))[1][1]), tuple(eval(res[0]))[1][1])
-    print(type(tuple(eval(res[0]))[1][2]), tuple(eval(res[0]))[1][2])
-    print((tuple(eval(res[0]))[1][1]) + (tuple(eval(res[0]))[1][0]))
+    pass
+    block_path = r"G:\YiDuDom2\block7"
+    file_path = r"G:\YiDuDom2\geo_info.txt"
+    write_block_geo_info(block_path, file_path)
+    # res = read_geo_file(file_path)
+    # print(res)
+    # print(res[0])
+    # print(tuple(eval(res[0]))[1])
+    # print(type(tuple(eval(res[0]))[1][0]), tuple(eval(res[0]))[1][0])
+    # print(type(tuple(eval(res[0]))[1][1]), tuple(eval(res[0]))[1][1])
+    # print(type(tuple(eval(res[0]))[1][2]), tuple(eval(res[0]))[1][2])
+    # print((tuple(eval(res[0]))[1][1]) + (tuple(eval(res[0]))[1][0]))

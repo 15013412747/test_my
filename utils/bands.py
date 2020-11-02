@@ -1,6 +1,20 @@
 import gdal
 import os
 
+"""转换图片波段"""
+
+
+def read_img(pos_img_name):
+    # 第一步 读取文件
+    dataset = gdal.Open(pos_img_name)  # 打开文件
+    im_width = dataset.RasterXSize  # 栅格矩阵的列数
+    im_height = dataset.RasterYSize  # 栅格矩阵的行数
+
+    im_geotrans = dataset.GetGeoTransform()  # 仿射矩阵
+    im_proj = dataset.GetProjection()  # 地图投影信息
+
+    return pos_img_name, im_geotrans, im_proj
+
 
 # 转换 tif 文件波段
 def band4_to_band3(band4_path, band3_path):
@@ -15,7 +29,6 @@ def band4_to_band3(band4_path, band3_path):
     datatype = in_ds.GetRasterBand(1).DataType
     im_data = in_ds.ReadAsArray()  # 获取数据
     print(width, height, outbandsize, datatype)
-
     # 去读坐标信息
     # ori_transform 数据结构：
     # (111.586453936076, 5.753036668243302e-07, 0.0, 30.208775394866, 0.0, -4.998577917582736e-07)
@@ -56,6 +69,7 @@ def band4_to_band3(band4_path, band3_path):
 
     del out_ds, out_band1, out_band2, out_band3  # out_band4
     print(" === end band4 trans to band3")
+    return band4_path, im_geotrans, im_proj
 
 
 def block_band4_to_band3(block_path, block_path2):
@@ -74,6 +88,11 @@ def block_band4_to_band3(block_path, block_path2):
         band4_to_band3(band4_path, band3_path)
 
 
+# block_band4_to_band3(r"G:\SongZi_Zhengti\songzi_yang5_20201017_zhengti",
+#                      r"G:\SongZi_Zhengti\songzi_yang5_20201017_zhengti_3band")
+# exit()
+
+
 # 转换所有 tif 文件波段
 def total_band4_to_band3(ori_path, new_path):
     # ori_path = r"E:\qu"
@@ -83,8 +102,8 @@ def total_band4_to_band3(ori_path, new_path):
     # 遍历区块
     for block_dir in tif_path_list:
         # 只转设定区块的数据
-        if not block_dir in ["YiDu1027_DOM"]:
-            continue
+        # if not block_dir in ["YiDu1027_DOM"]:
+        #     continue
         # 遍历区块下的文件夹
         block_path = os.path.join(ori_path, block_dir)
         block_path2 = os.path.join(new_path, block_dir)
@@ -105,12 +124,12 @@ def total_band4_to_band3(ori_path, new_path):
 
 
 if __name__ == "__main__":
-    print("switch bands start ===")
-    path1 = r'F:\YiDuDom'
-    path2 = path1 + '3bangs'
-    print(path1, path2)
-    total_band4_to_band3(path1, path2)
+    # print("switch bands start ===")
+    # path1 = r'G:\SongZi_new'
+    # path2 = path1 + '3bangs'
+    # print(path1, path2)
+    # total_band4_to_band3(path1, path2)
     pass
-    # band4_to_band3(r'E:\qu\songzi_yang4\szy4-0-0.tif', r'E:\3bangs_qu\tif\test.tif')
+    # band4_to_band3(r'G:\pos_calculation_YiDu\block7_tif\block7-0-0.tif', r'G:\YiDuDom2\block7\block7-0-0.tif')
     # band4_to_band3(r'E:\qu\songzi_yang4\szy4-0-0.tif', r'E:\3bangs_qu\tif\szy2-3-2.tif')
     # band4_to_band3(r'E:\qu\songzi_yang2\szy2-4-1.tif', r'E:\3bangs_qu\tif\szy2-4-1.tif')

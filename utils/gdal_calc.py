@@ -105,10 +105,17 @@ def write_geo_info_to(pos_img_name, data_img_name, new_img):
     del dataset, dataset2  # 关闭对象，文件dataset
 
 
-# write_geo_info_to(r"G:\pos_calculation_YiDu\block7_tif\block7-0-0.tif", r"G:\YiDuDom2\cut_save_merge\block7-0-0.jpg",
-#                   r"G:\YiDuDom2\cut_save_merge2\block7-0-0.jpg")
-#
-# exit()
+# 提取tif文件经纬度信息 和 jpg图片 像素信息 生成一个带经纬度的JPG图片
+# 操作一整个区块
+def block_write_geo_info_to(pos_block_path, jpg_block_path, new_block_path):
+    for img_name in os.listdir(pos_block_path):
+        if img_name.split(".")[-1] not in ['jpg']:
+            continue
+        pos_img_name = os.path.join(pos_block_path, img_name)
+        data_img_name = os.path.join(jpg_block_path, img_name)
+        new_img = os.path.join(new_block_path, img_name)
+        print(pos_img_name, data_img_name, new_img)
+        write_geo_info_to(pos_img_name, data_img_name, new_img)
 
 
 def read_img2(filename):
@@ -132,15 +139,23 @@ def read_img2(filename):
 # exit()
 
 if __name__ == "__main__":
-    os.chdir(r'D:/test1')  # 切换路径到待处理图像所在文件夹
-    run = GRID()
-    # 第一步
-    proj, geotrans, data1, row1, column1 = run.read_img('1-0-0.tif')  # 读数据,获取tif图像的信息
+    pass
+    # block_write_geo_info_to(r"G:\SongZi_new3bangs\jpg\songzi_yang6_20201017_2",
+    #                         r"G:\SongZi_new3bangs\cut_save_merge\songzi_yang6_20201017_2",
+    #                         r"G:\SongZi_new3bangs\cut_save_merge_pos\songzi_yang6_20201017_2",
+    #                         )
 
-    # print(proj, geotrans, data1, row1, column1)
-    img_path = '1-0-0.png'  # 读取png图像数据
-    data2 = cv2.imread(img_path, -1)
+    # exit()
 
-    data = np.array((data2), dtype=data1.dtype)  # 数据格式
-
-    run.write_img('aresult1.tif', proj, geotrans, data)  # 生成tif
+    # os.chdir(r'D:/test1')  # 切换路径到待处理图像所在文件夹
+    # run = GRID()
+    # # 第一步
+    # proj, geotrans, data1, row1, column1 = run.read_img('1-0-0.tif')  # 读数据,获取tif图像的信息
+    #
+    # # print(proj, geotrans, data1, row1, column1)
+    # img_path = '1-0-0.png'  # 读取png图像数据
+    # data2 = cv2.imread(img_path, -1)
+    #
+    # data = np.array((data2), dtype=data1.dtype)  # 数据格式
+    #
+    # run.write_img('aresult1.tif', proj, geotrans, data)  # 生成tif

@@ -10,12 +10,6 @@ Image.MAX_IMAGE_PIXELS = None
 IMAGES_FORMAT = ['.png']  # 图片格式
 
 
-# src = input('请输入图片文件路径：')
-# print(src)
-#
-# #list = os.listdir(src)
-# dstpath = input('请输入图片输出目录（不输入路径则表示使用源图片所在目录）：')
-
 # 切图方法 切割单张图片为 1000 * 1000 大小的散图
 # ori_img_path  源图片路径
 # save_img_path  保存图片路径
@@ -60,6 +54,9 @@ def _cut_image(ori_img_path, save_img_path, img_name):
     # print(max_col)
 
     images = []
+    # 图片格式
+    img_type = ".jpg"
+
     for i in range(max_row):
         images_temp = []
         for j in range(max_col):
@@ -68,27 +65,27 @@ def _cut_image(ori_img_path, save_img_path, img_name):
             if ((width + j * w_val) > original_width and (
                     i * h_val + height) <= original_height):  # Judge the right most incomplete part
                 temp = img[i * h_val:i * h_val + height, j * w_val:original_width, :]
-                temp_path = temp_path + str(temp.shape[0]) + '_' + str(temp.shape[1]) + '.png'
+                temp_path = temp_path + str(temp.shape[0]) + '_' + str(temp.shape[1]) + img_type
                 # temp = temp[:, :, 0]
                 cv2.imwrite(temp_path, temp)
                 images_temp.append(temp)
             elif ((height + i * h_val) > original_height and (
                     j * w_val + width) <= original_width):  # Judge the incomplete part at the bottom
                 temp = img[i * h_val:original_height, j * w_val:j * w_val + width, :]
-                temp_path = temp_path + str(temp.shape[0]) + '_' + str(temp.shape[1]) + '.png'
+                temp_path = temp_path + str(temp.shape[0]) + '_' + str(temp.shape[1]) + img_type
                 # temp = temp[:, :, 0]
                 cv2.imwrite(temp_path, temp)
                 images_temp.append(temp)
             elif ((width + j * w_val) > original_width and (
                     i * h_val + height) > original_height):  # Judge the last slide
                 temp = img[i * h_val:original_height, j * w_val:original_width, :]
-                temp_path = temp_path + str(temp.shape[0]) + '_' + str(temp.shape[1]) + '.png'
+                temp_path = temp_path + str(temp.shape[0]) + '_' + str(temp.shape[1]) + img_type
                 # temp = temp[:, :, 0]
                 cv2.imwrite(temp_path, temp)
                 images_temp.append(temp)
             else:
                 temp = img[i * h_val:i * h_val + height, j * w_val:j * w_val + width, :]
-                temp_path = temp_path + str(temp.shape[0]) + '_' + str(temp.shape[1]) + '.png'
+                temp_path = temp_path + str(temp.shape[0]) + '_' + str(temp.shape[1]) + img_type
                 # temp = temp[:, :, 0]
                 cv2.imwrite(temp_path, temp)
                 images_temp.append(temp)  # The rest of the complete
@@ -104,30 +101,31 @@ def _cut_image(ori_img_path, save_img_path, img_name):
 def cut_image_total(input_img_path, output_img_path):
     input_img_path_list = os.listdir(input_img_path)
     # 遍历区块
-    for block_dir in input_img_path_list:
-        print(block_dir)
+    for block_name in input_img_path_list:
+        print("=== block_name === :", block_name)
         # img_list = os.listdir(os.path.join(input_img_path, q_dir))
         # cut_image(input_img_path, output_img_path, q_dir)
-        q_dir1 = os.path.join(input_img_path, block_dir)
-        q_dir2 = os.path.join(input_img_path, block_dir)
-        cut_block_img(q_dir1, q_dir2)
+        block_path1 = os.path.join(input_img_path, block_name)
+        block_path2 = os.path.join(output_img_path, block_name)
+        block_cut_img(block_path1, block_path2)
 
 
-def cut_block_img(block_path, cut_path):
+def block_cut_img(block_path, cut_path):
     img_list = os.listdir(block_path)
     # 遍历图片
-    for _img in img_list:
+    for img_name in img_list:
         # 不是图片不处理
-        print(_img, _img.split(".")[-1].lower(), _img.split(".")[-1].lower() not in ['jpg', 'png'])
-        if _img.split(".")[-1].lower() not in ['jpg', 'png']:
+        print("=== img_name === :", img_name, img_name.split(".")[-1].lower(),
+              img_name.split(".")[-1].lower() not in ['jpg', 'png'])
+        if img_name.split(".")[-1].lower() not in ['jpg', 'png']:
             continue
-        _cut_image(block_path, cut_path, _img)
+        _cut_image(block_path, cut_path, img_name)
 
 
-block_path = r"F:\YiDuDom3bangs\YiDu1027_DOM_jpg"
-cut_path = r"F:\YiDuDom3bangs\YiDu1027_DOM_jpg_cut"
-cut_block_img(block_path, cut_path)
-exit()
+# block_path = r"F:\YiDuDom3bangs\YiDu1027_DOM_jpg"
+# cut_path = r"F:\YiDuDom3bangs\YiDu1027_DOM_jpg_cut"
+# block_cut_img(block_path, cut_path)
+# exit()
 
 
 def cut_block_img_tran(block_path, cut_path):
@@ -238,11 +236,11 @@ def cut_block_img_tran(block_path, cut_path):
 
 
 if "__main__" == __name__:
-    input_img_path = r"F:\YiDuDom2\png\block7"
-    output_img_path = r"F:\YiDuDom2\cut"
+    input_img_path = r"G:\SongZi_new3bangs\jpg"
+    output_img_path = r"G:\SongZi_new3bangs\cut"
 
-    cut_dir_img(input_img_path, output_img_path)
-    # cut_image_total(input_img_path, output_img_path)
+    # block_cut_img(input_img_path, output_img_path)
+    cut_image_total(input_img_path, output_img_path)
     # _cut_image(r"G:\pos_calculation_YiDu\block7_jpg", r"G:\pos_calculation_YiDu\block7_jpg_cut", "DSC00304.JPG")
 # file_name = "/Users/liuhongyan/xiangmu/data/gjb_bandao.png"#输入图像路径
 # save_path = '/Users/liuhongyan/xiangmu/data/small_0/'  # 输出图像的路径
