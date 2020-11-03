@@ -236,8 +236,8 @@ def cut_block_img_tran(block_path, cut_path):
 
 
 if "__main__" == __name__:
-    input_img_path = r"G:\SongZi_new3bangs\jpg"
-    output_img_path = r"G:\SongZi_new3bangs\cut"
+    input_img_path = r"F:\YiDuDom_new\jpg"
+    output_img_path = r"F:\YiDuDom_new\cut"
 
     # block_cut_img(input_img_path, output_img_path)
     cut_image_total(input_img_path, output_img_path)

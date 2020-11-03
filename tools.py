@@ -1,7 +1,7 @@
 import os
 
 from utils import bands
-from utils import tif_png2
+from utils import tif_trans_png_jpg
 from utils import cut_img
 from config.properties import Properties
 
@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     # tif 转化 png
     png_path = os.path.join(output_path, 'png_path')
-    tif_png2.total_tif_trans_png(band3_path, png_path)
+    tif_trans_png_jpg.total_tif_trans_png(band3_path, png_path)
 
     # png 切图
     cut_path = os.path.join(output_path, 'cut_path')

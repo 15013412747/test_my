@@ -16,8 +16,8 @@ def read_img(pos_img_name):
     return pos_img_name, im_geotrans, im_proj
 
 
-# 转换 tif 文件波段
-def band4_to_band3(band4_path, band3_path):
+# 转换 tif 文件波段，可以转换为 tif 或者 jpg 格式
+def band4_to_band3(band4_path, band3_path, img_type='jpg'):
     print(" === start band4 trans to band3")
     in_ds = gdal.Open(band4_path)  # 读取要切的原图
     print("open tif file succeed")
@@ -43,18 +43,20 @@ def band4_to_band3(band4_path, band3_path):
     out_band2 = in_band2.ReadAsArray()
     out_band3 = in_band3.ReadAsArray()
 
-    # 写入目标文件
-    gtif_driver = gdal.GetDriverByName("GTiff")
-
-    # file = r'E:\test\test2.tif'
-
     file = band3_path
     # 创建文件夹路径
     file_dir = os.path.dirname(file)
     if not os.path.exists(file_dir):
         os.mkdir(file_dir)
 
-    out_ds = gtif_driver.Create(file, height, width, 3, datatype)
+    # 写入目标文件
+    if img_type == 'tif':
+        gtif_driver = gdal.GetDriverByName("GTiff")
+        out_ds = gtif_driver.Create(file, height, width, 3, datatype)
+    elif img_type == 'jpg':
+        mem = gdal.GetDriverByName("MEM")
+        # jpg_path = band3_path.split(".")[0] + '.jpg'
+        out_ds = mem.Create("", width, height, 3, datatype)
 
     # 设置裁剪出来图的原点坐标
     out_ds.SetGeoTransform(ori_transform)
@@ -65,7 +67,13 @@ def band4_to_band3(band4_path, band3_path):
     out_ds.GetRasterBand(1).WriteArray(out_band1)
     out_ds.GetRasterBand(2).WriteArray(out_band2)
     out_ds.GetRasterBand(3).WriteArray(out_band3)
-    out_ds.FlushCache()
+
+    if img_type == 'tif':
+        out_ds.FlushCache()
+    elif img_type == 'jpg':
+        driver = gdal.GetDriverByName('JPEG')
+        jpg_path = band3_path.split(".")[0] + '.jpg'
+        dst_ds = driver.CreateCopy(jpg_path, out_ds)
 
     del out_ds, out_band1, out_band2, out_band3  # out_band4
     print(" === end band4 trans to band3")
@@ -102,34 +110,20 @@ def total_band4_to_band3(ori_path, new_path):
     # 遍历区块
     for block_dir in tif_path_list:
         # 只转设定区块的数据
-        # if not block_dir in ["YiDu1027_DOM"]:
-        #     continue
+        if not block_dir in ["Yidu1028DOM_1", "Yidu1028DOM_2"]:
+            continue
         # 遍历区块下的文件夹
         block_path = os.path.join(ori_path, block_dir)
         block_path2 = os.path.join(new_path, block_dir)
         block_band4_to_band3(block_path, block_path2)
-        # for tif_img in os.listdir(os.path.join(ori_path, block_dir)):
-        #     print(tif_img)
-        #
-        #     # 文件不存在，创建文件夹
-        #     if not os.path.exists(os.path.join(new_path, block_dir)):
-        #         os.makedirs(os.path.join(new_path, block_dir))
-        #     # 非 tif 不做处理，只处理 tif 格式文件
-        #     if tif_img.split(".")[-1] != 'tif':
-        #         continue
-        #     band4_path = os.path.join(ori_path, block_dir, tif_img)
-        #     band3_path = os.path.join(new_path, block_dir, tif_img)
-        #     print(band4_path, band3_path)
-        #     band4_to_band3(band4_path, band3_path)
 
 
 if __name__ == "__main__":
     # print("switch bands start ===")
-    # path1 = r'G:\SongZi_new'
-    # path2 = path1 + '3bangs'
-    # print(path1, path2)
-    # total_band4_to_band3(path1, path2)
+    path1 = r'F:\YiDuDom'
+    path2 = r'F:\YiDuDom_new\jpg'
+    total_band4_to_band3(path1, path2)
     pass
-    # band4_to_band3(r'G:\pos_calculation_YiDu\block7_tif\block7-0-0.tif', r'G:\YiDuDom2\block7\block7-0-0.tif')
+    # band4_to_band3(r'F:\YiDuDom\Yidu1028DOM_1\Yidu1028DOM_1-0-0.tif', r'F:\YiDuDom_new\Yidu1028DOM_1\Yidu1028DOM_1-0-0.tif')
     # band4_to_band3(r'E:\qu\songzi_yang4\szy4-0-0.tif', r'E:\3bangs_qu\tif\szy2-3-2.tif')
     # band4_to_band3(r'E:\qu\songzi_yang2\szy2-4-1.tif', r'E:\3bangs_qu\tif\szy2-4-1.tif')

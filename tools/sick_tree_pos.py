@@ -30,10 +30,10 @@ def get_pos_data(pos_file_path):
     return res
 
 
-def calc_pos(csv_path):
+def calc_pos(geo_info_path, sick_tree_file_path, csv_path):
     # 图片的经纬度信息
-    dict1 = get_img_geo_info(r"G:\SongZi_new3bangs\geo_info.txt")
-    pos_list = get_pos_data(r"G:\SongZi_new3bangs\output_res.txt")
+    dict1 = get_img_geo_info(geo_info_path)
+    pos_list = get_pos_data(sick_tree_file_path)
     with open(csv_path, "w") as f:
         for sick_tree in pos_list:
             img_path = sick_tree.split("|")[0]
@@ -72,7 +72,9 @@ if __name__ == "__main__":
     # dict1 = get_img_geo_info(r"G:\SongZi_new3bangs\geo_info.txt")
     # pos_list = get_pos_data(r"G:\SongZi_new3bangs\output_res.txt")
     print("========")
-    calc_pos(r"G:\SongZi_new3bangs\sick_tree_pos.csv")
+    geo_info_path = r"G:\YiDuDom_new\geo_info.txt"
+    sick_tree_file_path = r"G:\YiDuDom_new\output_res.txt"
+    calc_pos(geo_info_path, sick_tree_file_path, r"G:\YiDuDom_new\sick_tree_pos.csv")
     print("========")
 
     # print(pos_list)

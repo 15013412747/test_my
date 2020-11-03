@@ -70,7 +70,7 @@ def image_compose2(file_name, img_save_path):
             # path = file_name + str(num) + '_' + str(mnu) + '_' + \
             #        str(IMAGE_SIZE) + '_' + str(IMAGE_SIZE) + '.png'
             path = os.path.join(file_name, str(num) + '_' + str(mnu) + '_' + \
-                                str(IMAGE_SIZE) + '_' + str(IMAGE_SIZE) + '.png')
+                                str(IMAGE_SIZE) + '_' + str(IMAGE_SIZE) + '.jpg')
             # print(path)
             # f_dir_name = os.path.split(os.path.split(os.path.split(path)[0])[0])[1]
             from_image = Image.open(path).resize(
@@ -87,19 +87,22 @@ def image_compose2(file_name, img_save_path):
 # 拼接所有区块
 def total_merge_img(in_path, out_path):
     in_path_list = os.listdir(in_path)
-    for q_dir in in_path_list:
+    for block_name in in_path_list:
         # print(q_dir)
-        print(os.listdir(os.path.join(in_path, q_dir)))
-        # block_merge(cut_img_path, merge_img_path)
-        for img_name in os.listdir(os.path.join(in_path, q_dir)):
-            print("=== img_name:", img_name)
-            cut_img_path = os.path.join(os.path.join(in_path, q_dir, img_name))
-            merge_img_path = os.path.join(os.path.join(out_path, q_dir))
-            if not os.path.exists(merge_img_path):
-                os.makedirs(merge_img_path)
-            print("cut", cut_img_path)
-            # print(merge_img_path)
-            merge_img2(cut_img_path, merge_img_path)
+        block_path = os.path.join(in_path, block_name)
+        out_path = os.path.join(out_path, block_name)
+        block_merge(block_path, out_path)
+        # print(os.listdir(os.path.join(in_path, q_dir)))
+        # # block_merge(cut_img_path, merge_img_path)
+        # for img_name in os.listdir(os.path.join(in_path, q_dir)):
+        #     print("=== img_name:", img_name)
+        #     cut_img_path = os.path.join(os.path.join(in_path, q_dir, img_name))
+        #     merge_img_path = os.path.join(os.path.join(out_path, q_dir))
+        #     if not os.path.exists(merge_img_path):
+        #         os.makedirs(merge_img_path)
+        #     print("cut", cut_img_path)
+        #     # print(merge_img_path)
+        #     merge_img2(cut_img_path, merge_img_path)
 
 
 def block_merge(block_path, merge_block_path):
@@ -169,7 +172,8 @@ def merge_img(cut_img_path, merge_img_path):
 if "__main__" == __name__:
     # in_path = r"F:\3bangs_qu\save_img"
     # out_path = r"F:\3bangs_qu\merge_img"
-    block_merge(r"G:\SongZi_new3bangs\cut_save", r"G:\SongZi_new3bangs\cut_save_merge")
+    # total_merge_img(in_path, out_path)
+    block_merge(r"G:\YiDuDom_new\cut_save", r"G:\YiDuDom_new\cut_save_merge")
     # in_path = r"G:\pos_calculation_YiDu2"
     # out_path = r"G:\pos_calculation_YiDu3\block7_jpg_mem"
     # total_merge_img(in_path, out_path)

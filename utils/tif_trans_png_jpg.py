@@ -29,9 +29,38 @@ def tif_trans_png(tif_img_path, png_img_path):
 
 def tif_trans_jpg(tif_img_path, img_path):
     print("=== start transfer: ", tif_img_path, img_path)
-    ds = gdal.Open(tif_img_path)
+    in_ds = gdal.Open(tif_img_path)
+    print(in_ds.RasterCount)
+    width = in_ds.RasterXSize  # 获取数据宽度
+    height = in_ds.RasterYSize  # 获取数据高度
+    outbandsize = in_ds.RasterCount  # 获取数据波段数
+    im_geotrans = in_ds.GetGeoTransform()  # 获取仿射矩阵信息
+    im_proj = in_ds.GetProjection()  # 获取投影信息
+    datatype = in_ds.GetRasterBand(1).DataType
+
+    mem = gdal.GetDriverByName("MEM")
+    out_ds = mem.Create("", width, height, 3, datatype)
+
+    # 设置裁剪出来图的原点坐标
+    out_ds.SetGeoTransform(im_geotrans)
+    # 设置SRS属性（投影信息）
+    out_ds.SetProjection(im_proj)
+
+    # 读取原图中的每个波段
+    in_band1 = in_ds.GetRasterBand(1)
+    in_band2 = in_ds.GetRasterBand(2)
+    in_band3 = in_ds.GetRasterBand(3)
+
+    out_band1 = in_band1.ReadAsArray()
+    out_band2 = in_band2.ReadAsArray()
+    out_band3 = in_band3.ReadAsArray()
+
+    out_ds.GetRasterBand(1).WriteArray(out_band1)
+    out_ds.GetRasterBand(2).WriteArray(out_band2)
+    out_ds.GetRasterBand(3).WriteArray(out_band3)
+
     driver = gdal.GetDriverByName('JPEG')
-    dst_ds = driver.CreateCopy(img_path, ds)
+    dst_ds = driver.CreateCopy(img_path, out_ds)
 
     print("=== end transfer: ", tif_img_path, img_path)
 
@@ -74,25 +103,11 @@ def total_tif_trans_png(tif_path, png_path):
         # """ block_path2 被转换后的 jpg或者png 格式区块路径"""
         block_path2 = os.path.join(png_path, block_name)
         block_tif_trans_img(block_path1, block_path2)
-        # for tif_img in os.listdir(os.path.join(tif_path, block_path)):
-        #     # 文件不存在，创建文件夹
-        #     if not os.path.exists(os.path.join(png_path, block_path)):
-        #         os.makedirs(os.path.join(png_path, block_path))
-        #
-        #     # if tif_img in ["block10-0-0.tif", "block10-0-1.tif", "block10-0-2.tif"]:
-        #     #     continue
-        #     # 处理文件格式，只处理 tif 格式
-        #     if tif_img.split(".")[-1] != 'tif':
-        #         continue
-        #     png_img = tif_img.split(".")[0] + '.png'
-        #     tif_img_path = os.path.join(tif_path, block_path, tif_img)
-        #     png_img_path = os.path.join(png_path, block_path, png_img)
-        #     tif_trans_png(tif_img_path, png_img_path)
 
 
 if __name__ == "__main__":
-    tif_path = r"G:\SongZi_new3bangs\tif"
-    # png_path = r"E:\3bangs_qu\png"
-    png_path = r"G:\SongZi_new3bangs\jpg"
-    total_tif_trans_png(tif_path, png_path)
-
+    pass
+    # tif_path = r"G:\SongZi_new3bangs\tif"
+    # png_path = r"G:\SongZi_new3bangs\jpg"
+    # total_tif_trans_png(tif_path, png_path)
+    tif_trans_jpg(r"F:\YiDuDom\Yidu1028DOM_1\Yidu1028DOM_1-0-0.tif", r"F:\YiDuDom\test.jpg")
