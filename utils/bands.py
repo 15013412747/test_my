@@ -119,10 +119,12 @@ def total_band4_to_band3(ori_path, new_path):
 
 
 if __name__ == "__main__":
-    # print("switch bands start ===")
-    path1 = r'F:\YiDuDom'
-    path2 = r'F:\YiDuDom_new\jpg'
-    total_band4_to_band3(path1, path2)
+    print("switch bands start ===")
+    # path1 = r'F:\YiDuDom'
+    # path2 = r'F:\YiDuDom_new\jpg'
+    # total_band4_to_band3(path1, path2)
+    block_band4_to_band3(r"F:\YiDuDom\block3", r"F:\YiDuDom\block3_jpg")
+
     pass
     # band4_to_band3(r'F:\YiDuDom\Yidu1028DOM_1\Yidu1028DOM_1-0-0.tif', r'F:\YiDuDom_new\Yidu1028DOM_1\Yidu1028DOM_1-0-0.tif')
     # band4_to_band3(r'E:\qu\songzi_yang4\szy4-0-0.tif', r'E:\3bangs_qu\tif\szy2-3-2.tif')

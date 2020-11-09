@@ -110,4 +110,4 @@ if __name__ == "__main__":
     # tif_path = r"G:\SongZi_new3bangs\tif"
     # png_path = r"G:\SongZi_new3bangs\jpg"
     # total_tif_trans_png(tif_path, png_path)
-    tif_trans_jpg(r"F:\YiDuDom\Yidu1028DOM_1\Yidu1028DOM_1-0-0.tif", r"F:\YiDuDom\test.jpg")
+    tif_trans_jpg(r"F:\YiDuDom\block7\block7-0-0.tif", r"F:\YiDuDom\block7_jpg\block7-0-0.jpg")
