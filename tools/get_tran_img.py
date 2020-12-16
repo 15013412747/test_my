@@ -45,8 +45,38 @@ def get_sick_tree_ori_img(ori_path, bad_img_path, re_tran_path):
         shutil.copy(path1, path2)
 
 
+# 宜都 1到 18区块选择部分切割图片做标记
+def select_tran_img(in_put_path, out_put_path):
+    if not os.path.exists(out_put_path):
+        os.makedirs(out_put_path)
+    # 被标记列表
+    select_list = [
+        "block6",
+        "block8",
+        "block10",
+    ]
+    for block_name in os.listdir(in_put_path):
+        if block_name not in select_list:
+            continue
+        for img_name in os.listdir(os.path.join(in_put_path, block_name)):
+            img_path = os.path.join(in_put_path, block_name, img_name)
+            for _img in os.listdir(img_path):
+                print("select: ", _img)
+                new_name = block_name + img_name + _img
+                path1 = os.path.join(img_path, _img)
+                # print(out_put_path, new_name)
+                path2 = os.path.join(out_put_path, new_name)
+                print('111', path1)
+                print('222', path2)
+                shutil.copy(path1, path2)
+
+
 if __name__ == "__main__":
     pass
+    # 选出被标记区块
+    in_put_path = r"G:\YiDuDom_jpg\jpg_cut"
+    out_put_path = r"G:\YiDuDom_jpg\label_img"
+    select_tran_img(in_put_path, out_put_path)
     # 选出病树图片
     # sick_tree_file = r"H:\Yidu_new\output_res.txt"
     # dector_path = r"H:\Yidu_new\cut_save"
@@ -54,7 +84,7 @@ if __name__ == "__main__":
     # get_sick_tree_img(sick_tree_file, dector_path, tran_path)
 
     # 选出错误原图
-    bad_img_path = r"H:\Yidu_new\bad_tran"
-    ori_path = r"H:\Yidu_new\cut"
-    re_tran_path = r"H:\Yidu_new\re_tran"
-    get_sick_tree_ori_img(ori_path, bad_img_path, re_tran_path)
+    # bad_img_path = r"H:\Yidu_new\bad_tran"
+    # ori_path = r"H:\Yidu_new\cut"
+    # re_tran_path = r"H:\Yidu_new\re_tran"
+    # get_sick_tree_ori_img(ori_path, bad_img_path, re_tran_path)

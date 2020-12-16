@@ -110,7 +110,20 @@ def total_band4_to_band3(ori_path, new_path):
     # 遍历区块
     for block_dir in tif_path_list:
         # 只转设定区块的数据
-        if not block_dir in ["Yidu1028DOM_1", "Yidu1028DOM_2"]:
+        t_list = [
+            "block4_5",
+            "block6",
+            "block8",
+            "block9",
+            "block10",
+            "block11_12_13",
+            "block14",
+            "block15",
+            "block16",
+            "block17",
+            "block18",
+        ]
+        if not block_dir in t_list:
             continue
         # 遍历区块下的文件夹
         block_path = os.path.join(ori_path, block_dir)
@@ -120,10 +133,10 @@ def total_band4_to_band3(ori_path, new_path):
 
 if __name__ == "__main__":
     print("switch bands start ===")
-    # path1 = r'F:\YiDuDom'
-    # path2 = r'F:\YiDuDom_new\jpg'
-    # total_band4_to_band3(path1, path2)
-    block_band4_to_band3(r"F:\YiDuDom\block3", r"F:\YiDuDom\block3_jpg")
+    path1 = r'F:\YiDuDom'
+    path2 = r'F:\YiDuDom_jpg\jpg'
+    total_band4_to_band3(path1, path2)
+    # block_band4_to_band3(r"F:\YiDuDom\block3", r"F:\YiDuDom\block3_jpg")
 
     pass
     # band4_to_band3(r'F:\YiDuDom\Yidu1028DOM_1\Yidu1028DOM_1-0-0.tif', r'F:\YiDuDom_new\Yidu1028DOM_1\Yidu1028DOM_1-0-0.tif')

@@ -98,7 +98,7 @@ def cut_image(ori_img_path, save_img_path, img_name):
 #   - block1  区块目录
 #     - img1  区块中图片
 #     - img2
-def cut_image_total(input_img_path, output_img_path):
+def total_cut_image(input_img_path, output_img_path):
     input_img_path_list = os.listdir(input_img_path)
     # 遍历区块
     for block_name in input_img_path_list:
@@ -110,6 +110,7 @@ def cut_image_total(input_img_path, output_img_path):
         block_cut_img(block_path1, block_path2)
 
 
+# 对一个区块的所有图片进行切割
 def block_cut_img(block_path, cut_path):
     img_list = os.listdir(block_path)
     # 遍历图片
@@ -127,7 +128,7 @@ def block_cut_img(block_path, cut_path):
 # block_cut_img(block_path, cut_path)
 # exit()
 
-
+# 跳跃的切割原始图片为训练集
 def cut_block_img_tran(block_path, cut_path):
     img_list = os.listdir(block_path)
     # 遍历图片
@@ -143,7 +144,7 @@ def cut_block_img_tran(block_path, cut_path):
         print(i, _img, _img.split(".")[-1].lower(), _img.split(".")[-1].lower() not in ['jpg', 'png'])
         if _img.split(".")[-1].lower() not in ['jpg', 'png']:
             continue
-        _cut_image(block_path, cut_path, _img)
+        cut_image(block_path, cut_path, _img)
 
 
 # cut_block_img_tran(r"F:\20201028_YiDu\1", r"F:\20201028_YiDu\tran")
@@ -152,9 +153,15 @@ def cut_block_img_tran(block_path, cut_path):
 
 
 if "__main__" == __name__:
-    input_img_path = r"G:\pos_calculation_YiDu\block7_jpg"
-    output_img_path = r"G:\pos_calculation_YiDu\block7_jpg_cut"
+    pass
+    # 切割一个区块
+    # block_path = r"G:\pos_calculation_YiDu\block7_jpg"
+    # block_cut_path = r"G:\pos_calculation_YiDu\block7_jpg_cut"
+    # block_cut_img(block_path, block_cut_path)
 
-    block_cut_img(input_img_path, output_img_path)
-    # cut_image_total(input_img_path, output_img_path)
+    # 切割所有
+    path1 = r"F:\YiDuDom_jpg\jpg"
+    path2 = r"F:\YiDuDom_jpg\jpg_cut"
+    total_cut_image(path1, path2)
+
     # _cut_image(r"G:\pos_calculation_YiDu\block7_jpg", r"G:\pos_calculation_YiDu\block7_jpg_cut", "DSC00304.JPG")
